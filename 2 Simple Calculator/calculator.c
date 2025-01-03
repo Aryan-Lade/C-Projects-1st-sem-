@@ -65,5 +65,6 @@ int main (){
 
         printf("Result of the operation is: %.2f\n",result);
     }
+    printf("\nCreated by: Aryan Lade");
     return 0;
 }

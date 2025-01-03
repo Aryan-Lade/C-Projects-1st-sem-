@@ -61,4 +61,5 @@ void fill_time(char* buffer,int format){
     } else{
         strftime(buffer,50, "%I:%M:%S %p", current_time);
     }
+    printf("\nCreated by: Aryan Lade");
 }

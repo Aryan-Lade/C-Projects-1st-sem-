@@ -64,4 +64,6 @@ void print_bar(Task task) {
     }
   }
   printf("] %d%%\n", task.progress);
+
+  printf("\nCreated by: Aryan Lade");
 }

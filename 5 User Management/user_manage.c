@@ -112,4 +112,6 @@ void input_credentials(char* username, char* password) {
 void fix_fgets_input(char* string) {
   int index = strcspn(string, "\n");
   string[index] = '\0';
+
+  printf("\nCreated by: Aryan Lade");
 }
