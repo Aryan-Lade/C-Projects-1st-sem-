@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <windows.h>
 #include <time.h>
-#include <unistd.h>
 
 #define HEIGHT 20
 #define WIDTH 60
@@ -30,33 +30,34 @@ void input();
 void game_play();
 
 int main() {
-  srand(time(NULL));
+  srand((unsigned int)time(NULL));
   setup();
   while (1) {
     draw();
     input();
     game_play();
-    usleep(100000); // Sleep for 100 milliseconds
+    Sleep(100); // Sleep for 100 milliseconds
   }
 }
 
 void input() {
-  if (_kbhit()) {
+  if (_kbhit()) { // Check if a key is pressed
     char ch = _getch();
     switch (ch) {
     case 'a':
-      if (dir != RIGHT) dir = LEFT;
+      dir = LEFT;
       break;
     case 's':
-      if (dir != UP) dir = DOWN;
+      dir = DOWN;
       break;
     case 'd':
-      if (dir != LEFT) dir = RIGHT;
+      dir = RIGHT;
       break;
     case 'w':
-      if (dir != DOWN) dir = UP;
+      dir = UP;
       break;
     case 'x':
+      printf("\nGame Exited. Final Score: %d\n", score);
       exit(0);
       break;
     default:
@@ -67,8 +68,8 @@ void input() {
 
 void game_play() {
   for (int i = tail_length - 1; i > 0; i--) {
-    tail_x[i] = tail_x[i-1];
-    tail_y[i] = tail_y[i-1];
+    tail_x[i] = tail_x[i - 1];
+    tail_y[i] = tail_y[i - 1];
   }
   if (tail_length > 0) {
     tail_x[0] = head_x;
@@ -92,17 +93,10 @@ void game_play() {
     break;
   }
 
-  if (head_x < 0) {
-    head_x = WIDTH - 1;
-  } else if (head_x >= WIDTH) {
-    head_x = 0;
-  }
-
-  if (head_y < 0) {
-    head_y = HEIGHT - 1;
-  } else if (head_y >= HEIGHT) {
-    head_y = 0;
-  }
+  if (head_x < 0) head_x = WIDTH - 1;
+  if (head_x >= WIDTH) head_x = 0;
+  if (head_y < 0) head_y = HEIGHT - 1;
+  if (head_y >= HEIGHT) head_y = 0;
 
   for (int i = 0; i < tail_length; i++) {
     if (tail_x[i] == head_x && tail_y[i] == head_y) {
@@ -131,14 +125,14 @@ void setup() {
 
 void draw() {
   clear_screen();
-  printf("\t\tWelcome to The Snake Game!!!\n");
+  printf("\t\tWelcome to The Snake Game!!!");
+  printf("\n");
   for (int i = 0; i < WIDTH + 2; i++) {
     printf("#");
   }
-  printf("\n");
 
   for (int i = 0; i < HEIGHT; i++) {
-    printf("#");
+    printf("\n#");
     for (int j = 0; j < WIDTH; j++) {
       if (i == head_y && j == head_x) {
         printf("O");
@@ -158,9 +152,10 @@ void draw() {
         }
       }
     }
-    printf("#\n");
+    printf("#");
   }
 
+  printf("\n");
   for (int i = 0; i < WIDTH + 2; i++) {
     printf("#");
   }
@@ -168,9 +163,7 @@ void draw() {
 }
 
 void clear_screen() {
-  #ifdef _WIN32
-    system("cls");
-  #else
-    system("clear");
-  #endif    
+  system("cls"); // Clear screen for Windows
 }
+ 
+ 
